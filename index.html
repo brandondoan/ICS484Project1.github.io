@@ -8,26 +8,28 @@
 </head>
 <body>
        <header>
-            <button class="button button1"style="float: right" type="button" onclick="alert('Visualization by: Brandon Doan\nData created & compiled by: Robin Wilson\nLibraries used: Plotly.js ')">About this visualization</button> 
+            <button class="button button1"style="float: right" type="button" onclick="alert('Visualization by: Brandon Doan\nData created & compiled by: Robin Wilson\nLibraries used: Plot.ly ')">About this visualization</button> 
            <h2><center><font face="Arial" size="20" color="black">Cholera Deaths in London 1854 </font></center></h2>
            
         </header>
-    <div id="thevizcolumn" style="width:100%; height:1180px; float: left; background-color:rgb(255, 255, 255);">
-      <div style="width:100%; height:1280px; float: left; margin: auto;">
+    <div id="thevizcolumn" style="width:100%; height:1080px; float: left; background-color:rgb(255, 255, 255);">
+      <div style="width:100%; height:1080px; float: left; margin: auto;">
       <div id="table1" style="width:100%;height:1080px;" ></div>
-      </div>
-    </div>
+	  </div>
+	</div>
+	
     
     <div style="width:100%; height:960px; float: left;">
         <div id="plot1" style="width:100%;height:900px; margin: auto;" ></div>
-    </div>
+	</div>
+	
+	<div style="width:100%; height:1080px; float: left; margin: auto;">
+		<div id="naplesTable" style="width:100%;height:1080px;" ></div>
+	</div>
 
     
     <script>
 
-        function onButtonClick(){
-            document.getElementById('textInput').className="show";
-        }
         var deaths = [
 	{
 		"Date": "19-Aug-1854",
@@ -240,12 +242,62 @@
 		"Death": 1
 	}
 ]
+ var naplesData = [
+	{
+		"age": "0-1",
+		"male": 8.2,
+		"female": 8.9
+	},
+	{
+		"age": "2-5",
+		"male": 14,
+		"female": 14.7
+	},
+	{
+		"age": "6-10",
+		"male": 12.1,
+		"female": 11.2
+	},
+	{
+		"age": "11-15",
+		"male": 7.8,
+		"female": 7.1
+	},
+	{
+		"age": "16-20",
+		"male": 7.2,
+		"female": 7.2
+	},
+	{
+		"age": "21-40",
+		"male": 12.1,
+		"female": 11.8
+	},
+	{
+		"age": "41-60",
+		"male": 13.7,
+		"female": 12.9
+	},
+	{
+		"age": "61-80",
+		"male": 20.5,
+		"female": 20.5
+	},
+	{
+		"age": "over 80",
+		"male": 39.6,
+		"female": 37.8
+	}
+]
 
 var dateOfDeaths = []
 var attacks = []
 var deathsByDay = []
 var deathTotal = [deaths[0].Death]
 var attackTotal = [deaths[0].Attack]
+var naplesAge = []
+var naplesFemale = []
+var naplesMale = []
 
 var values = [
       dateOfDeaths,
@@ -258,7 +310,7 @@ var data = [{
   type: 'table',
   header: {
     values: [["DATE"], ["Attacks that Day"],
-				 ["Total Attacks"], ["Deaths that Day"], ["Total Deaths"]],
+				 ["Total Attacks to Date"], ["Deaths that Day"], ["Total Deaths to Date"]],
     align: ["left", "center"],
     line: {width: 1, color: '#506784'},
     fill: {color: '#119DFF'},
@@ -273,6 +325,36 @@ var data = [{
   }
 }]
 
+var naplesValues = [
+	naplesAge,
+	naplesMale,
+	naplesFemale
+]
+
+for (var i = 0; i <naplesData.length; i++) {
+    naplesAge.push(naplesData[i].age)
+    naplesMale.push(naplesData[i].male)
+    naplesFemale.push(naplesData[i].female)
+}
+
+var data2 = [{
+  type: 'table',
+  header: {
+    values: [["Age"], ["Male"],
+				 ["Female"]],
+    align: ["left", "center"],
+    line: {width: 1, color: '#506784'},
+    fill: {color: '#119DFF'},
+    font: {family: "Arial", size: 12, color: "white"}
+  },
+  cells: {
+    values: naplesValues,
+    align: ["left", "center"],
+    line: {color: "#506784", width: 1},
+	 fill: {color: ['#25FEFD', 'white']},
+    font: {family: "Arial", size: 11, color: ["#506784"]}
+  }
+}]
 
 for (var i = 0; i <deaths.length; i++) {
     dateOfDeaths.push(deaths[i].Date)
@@ -329,8 +411,9 @@ for (var i = 1; i <deaths.length; i++) {
     
        plot1Div = document.getElementById('plot1');
        table1Div = document.getElementById('table1');
+	   naplesTableDiv = document.getElementById('naplesTable');
        var layout = {
-           title: "Attacks and Deaths by Date",
+           title: "Attacks and deaths over the course of the London Cholera Outbreak of 1854 ",
            yaxis: {rangemode: 'tozero',
            title: '# of people',
            showline: true,
@@ -343,103 +426,23 @@ for (var i = 1; i <deaths.length; i++) {
        };
 
        var tablelayout = {
-           title: "Table of Attacks and Deaths by Date",
+           title: "Table for the amount of cholera attacks and deaths by date. (includes cumulative values up to the specified date)",
+           yaxis: {rangemode: 'tozero',
+          showline: true,
+          zeroline: true}
+       }
+
+	          var naplesTableLayout = {
+           title: "Naples fatality numbers for cholera in the same time period, grouped by men and women in different age groups",
            yaxis: {rangemode: 'tozero',
           showline: true,
           zeroline: true}
        }
         var myChart1=Plotly.plot( plot1Div, data1, layout );
         var myTable1=Plotly.plot( table1Div, data, tablelayout);
+		var myNaplesTable=Plotly.plot( naplesTableDiv, data2, naplesTableLayout);
     
-        var button = document.getElementById("myButton");
-        var button2 = document.getElementById("myButton2");
-        var button3 = document.getElementById("myButton3");
-        var slider = document.getElementById("mySlider");
-        var input = document.getElementById("myInput");
-        var check = document.getElementById("myCheck");
-        check.checked=true;
-    
-        input.onfocus = function(){
-            input.value="0";
-        }
-    
-        check.onclick = function(){
-            if (check.checked == true){
-                trace0.visible = true;
-            } else {
-                trace0.visible = false;
-            }
-            Plotly.react(plot1Div,
-            data1, 0);   // Zero here refers to the zeroth plot trace
-        }
-    
-    
-        updateChart = function(value) {
-            // Change the value in one of the data arrays
-            var arry = trace0.y;
-            arry[0]=value
-    
-            // Update the plot to reflect the new data change.
-            Plotly.newPlot(plot1Div,
-            data1, 0);   // Zero here refers to the zeroth plot trace
-        }
-        input.onkeyup = function() {
-            slider.value = input.value;
-            updateChart(input.value);
-        }
-        slider.oninput = function() {
-            input.value = slider.value;
-            updateChart(slider.value);
-        }
-    
-        // Add one additional data value to trace 0
-        button.onclick = function(){
-    
-            // Add a data value to the data array
-    
-            var arrx = trace0.x;
-            var arry = trace0.y;
-    
-            arrx.push(arrx.length);
-            arry.push(Math.random()*10);
-    
-            // Update the plot to reflect the new data change.
-            Plotly.newPlot(plot1Div, data1, 0);   // Zero here refers to the zeroth plot trace
-        }
-    
-        // When you click on Button 2 it adds a new trace to the plot.
-        button2.onclick = function(){
-    
-            var arrx = [1,2,3,4];   // X axis values
-            var arry = [0,0,0,0];   // Y axis values
-    
-            var trace = {
-                x: arrx,
-                y: arry
-            }
-            var data = [trace];
-    
-            // Put some random numbers into the trace.
-            for (i in arrx){
-                arry[i] = Math.random()*15;
-            }
-            
-            // Add the data to the plot.
-            Plotly.plot( plot1Div, data);
-        }
-    
-        // Change the color of trace 0 to some random color
-        button3.onclick = function(){
-            var updateColor = {
-                marker: {
-                    color: 'rgb(250, 0, 0)'
-                }
-            }
-    
-            var aRandomColor = "rgb("+Math.random()*255+","+Math.random()*255+","+Math.random()*255+")";
-            updateColor.marker.color = aRandomColor;
-            Plotly.restyle(plot1Div, updateColor,0);
-        }
+        
     </script>
 </body>
 
