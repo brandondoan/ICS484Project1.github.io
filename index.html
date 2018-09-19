@@ -4,20 +4,30 @@
 <head>
   <!-- Plotly.js -->
    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="thevizcolumn" style="width:100%; height:960px; float: left; background-color:rgb(255, 255, 255);">
-      <p><center><font face="Arial" size="20" color="black">Cholera Deaths in London 1854 </font></center></p>
-      <div style="width:40%; height:960px; float: left">
-      <div id="table1" style="width:100%;height:960px;" ></div>
+       <header>
+            <button class="button button1"style="float: right" type="button" onclick="alert('Visualization by: Brandon Doan\nData created & compiled by: Robin Wilson\nLibraries used: Plotly.js ')">About this visualization</button> 
+           <h2><center><font face="Arial" size="20" color="black">Cholera Deaths in London 1854 </font></center></h2>
+           
+        </header>
+    <div id="thevizcolumn" style="width:100%; height:1180px; float: left; background-color:rgb(255, 255, 255);">
+      <div style="width:100%; height:1280px; float: left; margin: auto;">
+      <div id="table1" style="width:100%;height:1080px;" ></div>
       </div>
-      <div style="width:60%; height:960px; float: left">
-      <div id="plot1" style="width:100%;height:900px;" ></div>
-      </div>
+    </div>
+    
+    <div style="width:100%; height:960px; float: left;">
+        <div id="plot1" style="width:100%;height:900px; margin: auto;" ></div>
     </div>
 
     
     <script>
+
+        function onButtonClick(){
+            document.getElementById('textInput').className="show";
+        }
         var deaths = [
 	{
 		"Date": "19-Aug-1854",
@@ -298,7 +308,7 @@ for (var i = 1; i <deaths.length; i++) {
             x: dateOfDeaths,
             y: deathTotal,
             type: 'scatter',
-            name: 'total # of Deaths',
+            name: 'Cumulative Deaths',
             line: {
                 color: 'rgb(255, 4, 255)',
                 width: 4
@@ -308,7 +318,7 @@ for (var i = 1; i <deaths.length; i++) {
             x: dateOfDeaths,
             y: attackTotal,
             type: 'scatter',
-            name: 'total # of Attacks',
+            name: 'Cumulative Attacks',
             line: {
                 color: 'rgb(20, 255, 25)',
                 width: 4
@@ -327,7 +337,7 @@ for (var i = 1; i <deaths.length; i++) {
            zeroline: true},
            xaxis: {
               title: 'Date',
-              margin: 100,
+              margin: 160,
               tickangle: 45
           }
        };
