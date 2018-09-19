@@ -23,10 +23,14 @@
         <div id="plot1" style="width:100%;height:900px; margin: auto;" ></div>
 	</div>
 	
-	<div style="width:100%; height:1080px; float: left; margin: auto;">
-		<div id="naplesTable" style="width:100%;height:1080px;" ></div>
+	<div style="width:100%; height:400px; float: left; margin: auto;">
+		<div id="naplesTable" style="width:100%;height:400px;" ></div>
 	</div>
 
+
+	<div style="width:100%; height:900px; float: left; margin: auto;">
+		<div id="naplesBar" style="width:100%;height:900px;" ></div>
+	</div>
     
     <script>
 
@@ -407,11 +411,45 @@ for (var i = 1; i <deaths.length; i++) {
              }
         };
         data1 = [trace0, trace1, trace3, trace4];
-    
+
+
+
+		var trace5 = {
+			x: naplesAge,
+  			y: naplesMale,
+  			name: 'Male',
+  			type: 'bar',
+			marker: {
+    			color: 'rgb(255,96,23)',
+    			line: {
+      				color: 'rbg(8,48,107)',
+      				width: 1.5
+    			}
+  			}
+		};
+
+		var trace6 = {
+  			x: naplesAge,
+  			y: naplesFemale,
+  			name: 'Female',
+  			type: 'bar',
+			marker: {
+    			color: 'rgb(23,182,255)',
+    			line: {
+      				color: 'rbg(8,48,107)',
+      				width: 1.5
+    			}
+  			}
+  
+		};
+
+		naplesBarData = [trace5, trace6];
+
     
        plot1Div = document.getElementById('plot1');
        table1Div = document.getElementById('table1');
 	   naplesTableDiv = document.getElementById('naplesTable');
+	   naplesBarDiv = document.getElementById('naplesBar');
        var layout = {
            title: "Attacks and deaths over the course of the London Cholera Outbreak of 1854 ",
            yaxis: {rangemode: 'tozero',
@@ -438,10 +476,16 @@ for (var i = 1; i <deaths.length; i++) {
           showline: true,
           zeroline: true}
        }
+
+	   	naplesBarLayout ={
+			   title: "Comparison of gender fatality rates for cholera in Naples, split by age group.",
+			barmode: 'group'
+		}
+
         var myChart1=Plotly.plot( plot1Div, data1, layout );
         var myTable1=Plotly.plot( table1Div, data, tablelayout);
 		var myNaplesTable=Plotly.plot( naplesTableDiv, data2, naplesTableLayout);
-    
+		var myNaplesBar=Plotly.plot( naplesBarDiv, naplesBarData, naplesBarLayout);
         
     </script>
 </body>
