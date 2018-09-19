@@ -40,6 +40,18 @@
 		<div id="censusBar" style="width:100%;height:900px;" ></div>
 	</div>
 
+	<div style="width:100%; height:800px; float: left; margin: auto;">
+		<div id="censusAgeMalePie" style="width:100%;height:800px;" ></div>
+	</div>
+
+	<div style="width:100%; height:800px; float: left; margin: auto;">
+		<div id="censusAgeFemalePie" style="width:100%;height:800px;" ></div>
+	</div>
+	
+	<div style="width:100%; height:800px; float: left; margin: auto;">
+		<div id="totalPopPie" style="width:100%;height:800px;" ></div>
+	</div>
+
 
     <script>
 
@@ -362,6 +374,8 @@ var naplesMale = []
 var censusAge = []
 var censusFemale = []
 var censusMale = []
+var totalMales = 0
+var totalFemales = 0
 
 var values = [
       dateOfDeaths,
@@ -410,6 +424,7 @@ for (var i = 0; i <naplesData.length; i++) {
     censusFemale.push(censusData[i].female)
 }
 
+
 var data2 = [{
   type: 'table',
   header: {
@@ -457,6 +472,11 @@ for (var i = 0; i <deaths.length; i++) {
 for (var i = 1; i <deaths.length; i++) {
     deathTotal[i] = deathTotal[i-1] + deaths[i].Death
     attackTotal[i] = attackTotal[i-1] + deaths[i].Attack
+}
+
+for (var i = 1; i < censusFemale.length; i++) {
+    totalFemales = totalFemales + censusFemale[i]
+    totalMales = totalMales + censusMale[i]
 }
         var trace0 = {
             x: dateOfDeaths,
@@ -564,13 +584,33 @@ for (var i = 1; i <deaths.length; i++) {
 		naplesBarData = [trace5, trace6];
 		censusBarData= [trace7, trace8];
 
+		var censusAgeMalePieData = [{
+  			values: censusMale,
+  			labels: censusAge,
+  			type: 'pie'
+		}];
     
+		var censusAgeFemalePieData = [{
+  			values: censusFemale,
+  			labels: censusAge,
+  			type: 'pie'
+		}];
+
+		var totalPopPieData = [{
+  			values: [totalMales, totalFemales],
+  			labels: ['Total Male Population', 'Total Female Population'],
+  			type: 'pie'
+		}];
+
        plot1Div = document.getElementById('plot1');
        table1Div = document.getElementById('table1');
 	   naplesTableDiv = document.getElementById('naplesTable');
 	   censusTableDiv = document.getElementById('censusTable');
 	   naplesBarDiv = document.getElementById('naplesBar');
 	   censusBarDiv = document.getElementById('censusBar');
+	   censusAgeMalePieDiv = document.getElementById('censusAgeMalePie');
+	   censusAgeFemalePieDiv = document.getElementById('censusAgeFemalePie');
+	   totalPopPieDiv = document.getElementById('totalPopPie');
 
        var layout = {
            title: "Attacks and deaths over the course of the London Cholera Outbreak of 1854 ",
@@ -615,6 +655,21 @@ for (var i = 1; i <deaths.length; i++) {
 			   title: "Comparison of gender population in Naples, split by age group.",
 			barmode: 'group'
 		}		
+		var censusAgeMaleLayout = {
+			title: "Pie chart of the male distrubtion by age group in Naples, 1854",
+  			height: 700,
+			width: 700
+		};
+		var censusAgeFemaleLayout = {
+			title: "Pie chart of the female distrubtion by age group in Naples, 1854",
+  			height: 700,
+			width: 700
+		};
+		var totalPopLayout = {
+			title: "Total populations compared by gender",
+  			height: 700,
+  			width: 700
+		};
 
         var myChart1=Plotly.plot( plot1Div, data1, layout );
         var myTable1=Plotly.plot( table1Div, data, tablelayout);
@@ -622,7 +677,10 @@ for (var i = 1; i <deaths.length; i++) {
 		var myNaplesBar=Plotly.plot( naplesBarDiv, naplesBarData, naplesBarLayout);
 		var myCensusTable=Plotly.plot( censusTableDiv, data3, censusTableLayout);
 		var myCensusBar=Plotly.plot( censusBarDiv, censusBarData, censusBarLayout);
-        
+        var myCensusAgeMalePie=Plotly.plot(censusAgeMalePieDiv, censusAgeMalePieData, censusAgeMaleLayout);
+		var myCensusAgeFemalePie=Plotly.plot(censusAgeFemalePieDiv, censusAgeFemalePieData, censusAgeFemaleLayout);
+		var mytotalPopPie=Plotly.plot(totalPopPieDiv, totalPopPieData, totalPopLayout);
+
     </script>
 </body>
 
