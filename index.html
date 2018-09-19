@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Plotly.js -->
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="thevizcolumn" style="width:100%; height:960px; float: left; background-color:rgb(255, 255, 255);">
+      <p><center><font face="Arial" size="20" color="black">Cholera Deaths in London 1854 </font></center></p>
+      <div style="width:40%; height:960px; float: left">
+      <div id="table1" style="width:100%;height:960px;" ></div>
+      </div>
+      <div style="width:60%; height:960px; float: left">
+      <div id="plot1" style="width:100%;height:900px;" ></div>
+      </div>
+    </div>
+
+    
+    <script>
+        var deaths = [
+	{
+		"Date": "19-Aug-1854",
+		"Attack": 1,
+		"Death": 1
+	},
+	{
+		"Date": "20-Aug-1854",
+		"Attack": 1,
+		"Death": 0
+	},
+	{
+		"Date": "21-Aug-1854",
+		"Attack": 1,
+		"Death": 2
+	},
+	{
+		"Date": "22-Aug-1854",
+		"Attack": 0,
+		"Death": 0
+	},
+	{
+		"Date": "23-Aug-1854",
+		"Attack": 1,
+		"Death": 0
+	},
+	{
+		"Date": "24-Aug-1854",
+		"Attack": 1,
+		"Death": 2
+	},
+	{
+		"Date": "25-Aug-1854",
+		"Attack": 0,
+		"Death": 0
+	},
+	{
+		"Date": "26-Aug-1854",
+		"Attack": 1,
+		"Death": 0
+	},
+	{
+		"Date": "27-Aug-1854",
+		"Attack": 1,
+		"Death": 1
+	},
+	{
+		"Date": "28-Aug-1854",
+		"Attack": 1,
+		"Death": 0
+	},
+	{
+		"Date": "29-Aug-1854",
+		"Attack": 1,
+		"Death": 1
+	},
+	{
+		"Date": "30-Aug-1854",
+		"Attack": 8,
+		"Death": 2
+	},
+	{
+		"Date": "31-Aug-1854",
+		"Attack": 56,
+		"Death": 3
+	},
+	{
+		"Date": "1-Sep-1854",
+		"Attack": 143,
+		"Death": 70
+	},
+	{
+		"Date": "2-Sep-1854",
+		"Attack": 116,
+		"Death": 127
+	},
+	{
+		"Date": "3-Sep-1854",
+		"Attack": 54,
+		"Death": 76
+	},
+	{
+		"Date": "4-Sep-1854",
+		"Attack": 46,
+		"Death": 71
+	},
+	{
+		"Date": "5-Sep-1854",
+		"Attack": 36,
+		"Death": 45
+	},
+	{
+		"Date": "6-Sep-1854",
+		"Attack": 20,
+		"Death": 37
+	},
+	{
+		"Date": "7-Sep-1854",
+		"Attack": 28,
+		"Death": 32
+	},
+	{
+		"Date": "8-Sep-1854",
+		"Attack": 12,
+		"Death": 30
+	},
+	{
+		"Date": "9-Sep-1854",
+		"Attack": 11,
+		"Death": 24
+	},
+	{
+		"Date": "10-Sep-1854",
+		"Attack": 5,
+		"Death": 18
+	},
+	{
+		"Date": "11-Sep-1854",
+		"Attack": 5,
+		"Death": 15
+	},
+	{
+		"Date": "12-Sep-1854",
+		"Attack": 1,
+		"Death": 6
+	},
+	{
+		"Date": "13-Sep-1854",
+		"Attack": 3,
+		"Death": 13
+	},
+	{
+		"Date": "14-Sep-1854",
+		"Attack": 0,
+		"Death": 6
+	},
+	{
+		"Date": "15-Sep-1854",
+		"Attack": 1,
+		"Death": 8
+	},
+	{
+		"Date": "16-Sep-1854",
+		"Attack": 4,
+		"Death": 6
+	},
+	{
+		"Date": "17-Sep-1854",
+		"Attack": 2,
+		"Death": 5
+	},
+	{
+		"Date": "18-Sep-1854",
+		"Attack": 3,
+		"Death": 2
+	},
+	{
+		"Date": "19-Sep-1854",
+		"Attack": 0,
+		"Death": 3
+	},
+	{
+		"Date": "20-Sep-1854",
+		"Attack": 0,
+		"Death": 0
+	},
+	{
+		"Date": "21-Sep-1854",
+		"Attack": 2,
+		"Death": 0
+	},
+	{
+		"Date": "22-Sep-1854",
+		"Attack": 1,
+		"Death": 2
+	},
+	{
+		"Date": "23-Sep-1854",
+		"Attack": 1,
+		"Death": 3
+	},
+	{
+		"Date": "24-Sep-1854",
+		"Attack": 1,
+		"Death": 0
+	},
+	{
+		"Date": "25-Sep-1854",
+		"Attack": 1,
+		"Death": 0
+	},
+	{
+		"Date": "26-Sep-1854",
+		"Attack": 1,
+		"Death": 2
+	},
+	{
+		"Date": "27-Sep-1854",
+		"Attack": 1,
+		"Death": 0
+	},
+	{
+		"Date": "28-Sep-1854",
+		"Attack": 0,
+		"Death": 2
+	},
+	{
+		"Date": "29-Sep-1854",
+		"Attack": 0,
+		"Death": 1
+	}
+]
+
+var dateOfDeaths = []
+var attacks = []
+var deathsByDay = []
+var deathTotal = [deaths[0].Death]
+var attackTotal = [deaths[0].Attack]
+
+var values = [
+      dateOfDeaths,
+      attacks,
+      attackTotal,
+      deathsByDay,
+      deathTotal]
+
+var data = [{
+  type: 'table',
+  header: {
+    values: [["DATE"], ["Attacks that Day"],
+				 ["Total Attacks"], ["Deaths that Day"], ["Total Deaths"]],
+    align: ["left", "center"],
+    line: {width: 1, color: '#506784'},
+    fill: {color: '#119DFF'},
+    font: {family: "Arial", size: 12, color: "white"}
+  },
+  cells: {
+    values: values,
+    align: ["left", "center"],
+    line: {color: "#506784", width: 1},
+	 fill: {color: ['#25FEFD', 'white']},
+    font: {family: "Arial", size: 11, color: ["#506784"]}
+  }
+}]
+
+
+for (var i = 0; i <deaths.length; i++) {
+    dateOfDeaths.push(deaths[i].Date)
+    attacks.push(deaths[i].Attack)
+    deathsByDay.push(deaths[i].Death)
+}
+
+for (var i = 1; i <deaths.length; i++) {
+    deathTotal[i] = deathTotal[i-1] + deaths[i].Death
+    attackTotal[i] = attackTotal[i-1] + deaths[i].Attack
+}
+        var trace0 = {
+            x: dateOfDeaths,
+            y: attacks,
+            type: 'scatter',
+            name: '# of Attacks',
+            line: {
+                color: 'rgb(4, 255, 234)',
+                width: 3
+            }
+        };
+        var trace1 = {
+            x: dateOfDeaths,
+            y: deathsByDay,
+            type: 'scatter',
+            name: '# of Deaths',
+            line: {
+                color: 'rgb(255, 4, 25)',
+                width: 3
+             }
+        };
+        var trace3 = {
+            x: dateOfDeaths,
+            y: deathTotal,
+            type: 'scatter',
+            name: 'total # of Deaths',
+            line: {
+                color: 'rgb(255, 4, 255)',
+                width: 4
+             }
+        };
+        var trace4 = {
+            x: dateOfDeaths,
+            y: attackTotal,
+            type: 'scatter',
+            name: 'total # of Attacks',
+            line: {
+                color: 'rgb(20, 255, 25)',
+                width: 4
+             }
+        };
+        data1 = [trace0, trace1, trace3, trace4];
+    
+    
+       plot1Div = document.getElementById('plot1');
+       table1Div = document.getElementById('table1');
+       var layout = {
+           title: "Attacks and Deaths by Date",
+           yaxis: {rangemode: 'tozero',
+           title: '# of people',
+           showline: true,
+           zeroline: true},
+           xaxis: {
+              title: 'Date',
+              margin: 100,
+              tickangle: 45
+          }
+       };
+
+       var tablelayout = {
+           title: "Table of Attacks and Deaths by Date",
+           yaxis: {rangemode: 'tozero',
+          showline: true,
+          zeroline: true}
+       }
+        var myChart1=Plotly.plot( plot1Div, data1, layout );
+        var myTable1=Plotly.plot( table1Div, data, tablelayout);
+    
+        var button = document.getElementById("myButton");
+        var button2 = document.getElementById("myButton2");
+        var button3 = document.getElementById("myButton3");
+        var slider = document.getElementById("mySlider");
+        var input = document.getElementById("myInput");
+        var check = document.getElementById("myCheck");
+        check.checked=true;
+    
+        input.onfocus = function(){
+            input.value="0";
+        }
+    
+        check.onclick = function(){
+            if (check.checked == true){
+                trace0.visible = true;
+            } else {
+                trace0.visible = false;
+            }
+            Plotly.react(plot1Div,
+            data1, 0);   // Zero here refers to the zeroth plot trace
+        }
+    
+    
+        updateChart = function(value) {
+            // Change the value in one of the data arrays
+            var arry = trace0.y;
+            arry[0]=value
+    
+            // Update the plot to reflect the new data change.
+            Plotly.newPlot(plot1Div,
+            data1, 0);   // Zero here refers to the zeroth plot trace
+        }
+        input.onkeyup = function() {
+            slider.value = input.value;
+            updateChart(input.value);
+        }
+        slider.oninput = function() {
+            input.value = slider.value;
+            updateChart(slider.value);
+        }
+    
+        // Add one additional data value to trace 0
+        button.onclick = function(){
+    
+            // Add a data value to the data array
+    
+            var arrx = trace0.x;
+            var arry = trace0.y;
+    
+            arrx.push(arrx.length);
+            arry.push(Math.random()*10);
+    
+            // Update the plot to reflect the new data change.
+            Plotly.newPlot(plot1Div, data1, 0);   // Zero here refers to the zeroth plot trace
+        }
+    
+        // When you click on Button 2 it adds a new trace to the plot.
+        button2.onclick = function(){
+    
+            var arrx = [1,2,3,4];   // X axis values
+            var arry = [0,0,0,0];   // Y axis values
+    
+            var trace = {
+                x: arrx,
+                y: arry
+            }
+            var data = [trace];
+    
+            // Put some random numbers into the trace.
+            for (i in arrx){
+                arry[i] = Math.random()*15;
+            }
+            
+            // Add the data to the plot.
+            Plotly.plot( plot1Div, data);
+        }
+    
+        // Change the color of trace 0 to some random color
+        button3.onclick = function(){
+            var updateColor = {
+                marker: {
+                    color: 'rgb(250, 0, 0)'
+                }
+            }
+    
+            var aRandomColor = "rgb("+Math.random()*255+","+Math.random()*255+","+Math.random()*255+")";
+            updateColor.marker.color = aRandomColor;
+            Plotly.restyle(plot1Div, updateColor,0);
+        }
+    </script>
+</body>
+
+
+</html>
