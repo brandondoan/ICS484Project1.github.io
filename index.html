@@ -31,7 +31,16 @@
 	<div style="width:100%; height:900px; float: left; margin: auto;">
 		<div id="naplesBar" style="width:100%;height:900px;" ></div>
 	</div>
-    
+
+	<div style="width:100%; height:400px; float: left; margin: auto;">
+		<div id="censusTable" style="width:100%;height:400px;" ></div>
+	</div>
+	
+	<div style="width:100%; height:900px; float: left; margin: auto;">
+		<div id="censusBar" style="width:100%;height:900px;" ></div>
+	</div>
+
+
     <script>
 
         var deaths = [
@@ -294,6 +303,54 @@
 	}
 ]
 
+var censusData = [
+  {
+    "age": "0 to 9",
+    "male": 2075391,
+    "female": 2065096
+  },
+  {
+    "age": "10 to 19",
+    "male": 1711664,
+    "female": 1711627
+  },
+  {
+    "age": "20 to 29",
+    "male": 1395091,
+    "female": 1542876
+  },
+  {
+    "age": "30 to 39",
+    "male": 1073914,
+    "female": 1140383
+  },
+  {
+    "age": "40 to 49",
+    "male": 810979,
+    "female": 845260
+  },
+  {
+    "age": "50 to 59",
+    "male": 560534,
+    "female": 592970
+  },
+  {
+    "age": "60 to 69",
+    "male": 351893,
+    "female": 399019
+  },
+  {
+    "age": "70 to 79",
+    "male": 166194,
+    "female": 199326
+  },
+  {
+    "age": "80+",
+    "male": 40772,
+    "female": 55704
+  }
+]
+
 var dateOfDeaths = []
 var attacks = []
 var deathsByDay = []
@@ -302,6 +359,9 @@ var attackTotal = [deaths[0].Attack]
 var naplesAge = []
 var naplesFemale = []
 var naplesMale = []
+var censusAge = []
+var censusFemale = []
+var censusMale = []
 
 var values = [
       dateOfDeaths,
@@ -335,10 +395,19 @@ var naplesValues = [
 	naplesFemale
 ]
 
+var censusValues = [
+	censusAge,
+	censusMale,
+	censusFemale
+]
+
 for (var i = 0; i <naplesData.length; i++) {
     naplesAge.push(naplesData[i].age)
     naplesMale.push(naplesData[i].male)
     naplesFemale.push(naplesData[i].female)
+	censusAge.push(censusData[i].age)
+    censusMale.push(censusData[i].male)
+    censusFemale.push(censusData[i].female)
 }
 
 var data2 = [{
@@ -353,6 +422,25 @@ var data2 = [{
   },
   cells: {
     values: naplesValues,
+    align: ["left", "center"],
+    line: {color: "#506784", width: 1},
+	 fill: {color: ['#25FEFD', 'white']},
+    font: {family: "Arial", size: 11, color: ["#506784"]}
+  }
+}]
+
+var data3 = [{
+  type: 'table',
+  header: {
+    values: [["Age"], ["Male"],
+				 ["Female"]],
+    align: ["left", "center"],
+    line: {width: 1, color: '#506784'},
+    fill: {color: '#119DFF'},
+    font: {family: "Arial", size: 12, color: "white"}
+  },
+  cells: {
+    values: censusValues,
     align: ["left", "center"],
     line: {color: "#506784", width: 1},
 	 fill: {color: ['#25FEFD', 'white']},
@@ -443,13 +531,47 @@ for (var i = 1; i <deaths.length; i++) {
   
 		};
 
+		var trace7 = {
+			x: censusAge,
+  			y: censusMale,
+  			name: 'Male',
+  			type: 'bar',
+			marker: {
+    			color: 'rgb(255,96,23)',
+    			line: {
+      				color: 'rbg(8,48,107)',
+      				width: 1.5
+    			}
+  			}
+		};
+
+		var trace8 = {
+  			x: censusAge,
+  			y: censusFemale,
+  			name: 'Female',
+  			type: 'bar',
+			marker: {
+    			color: 'rgb(23,182,255)',
+    			line: {
+      				color: 'rbg(8,48,107)',
+      				width: 1.5
+    			}
+  			}
+  
+		};
+
+
 		naplesBarData = [trace5, trace6];
+		censusBarData= [trace7, trace8];
 
     
        plot1Div = document.getElementById('plot1');
        table1Div = document.getElementById('table1');
 	   naplesTableDiv = document.getElementById('naplesTable');
+	   censusTableDiv = document.getElementById('censusTable');
 	   naplesBarDiv = document.getElementById('naplesBar');
+	   censusBarDiv = document.getElementById('censusBar');
+
        var layout = {
            title: "Attacks and deaths over the course of the London Cholera Outbreak of 1854 ",
            yaxis: {rangemode: 'tozero',
@@ -470,22 +592,36 @@ for (var i = 1; i <deaths.length; i++) {
           zeroline: true}
        }
 
-	          var naplesTableLayout = {
+	    var naplesTableLayout = {
            title: "Naples fatality numbers for cholera in the same time period, grouped by men and women in different age groups",
            yaxis: {rangemode: 'tozero',
           showline: true,
           zeroline: true}
        }
 
-	   	naplesBarLayout ={
+		var censusTableLayout = {
+           title: "Population census for Naples in 1854, grouped by men and women in different age groups",
+           yaxis: {rangemode: 'tozero',
+          showline: true,
+          zeroline: true}
+       }
+
+	   	var naplesBarLayout ={
 			   title: "Comparison of gender fatality rates for cholera in Naples, split by age group.",
 			barmode: 'group'
 		}
+
+	   	var censusBarLayout ={
+			   title: "Comparison of gender population in Naples, split by age group.",
+			barmode: 'group'
+		}		
 
         var myChart1=Plotly.plot( plot1Div, data1, layout );
         var myTable1=Plotly.plot( table1Div, data, tablelayout);
 		var myNaplesTable=Plotly.plot( naplesTableDiv, data2, naplesTableLayout);
 		var myNaplesBar=Plotly.plot( naplesBarDiv, naplesBarData, naplesBarLayout);
+		var myCensusTable=Plotly.plot( censusTableDiv, data3, censusTableLayout);
+		var myCensusBar=Plotly.plot( censusBarDiv, censusBarData, censusBarLayout);
         
     </script>
 </body>
