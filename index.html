@@ -52,6 +52,12 @@
 		<div id="totalPopPie" style="width:100%;height:800px;" ></div>
 	</div>
 
+	<div style="width:100%; height:px; float: left; margin: auto;">
+		<div id="mapLondon"></div>
+	</div>
+
+	<div style="width:100%; height:200px; float: left; margin: auto;">
+	</div>
 
     <script>
 
@@ -423,6 +429,44 @@ for (var i = 0; i <naplesData.length; i++) {
     censusMale.push(censusData[i].male)
     censusFemale.push(censusData[i].female)
 }
+
+Plotly.d3.tsv('choleraDeathLocations.tsv', function(err,rows){
+	Plotly.d3.tsv('choleraPumpLocations.tsv', function(err2,rows2) {
+		function unpack(rows, key) {
+			return rows.map(function(row) { return row[key]; });
+		}
+
+	
+
+var mapData = [{
+	type: "scattermapbox",
+	lat: choleraLat,
+	lon: choleraLon,
+	marker: {
+		size: 20,
+		color: "red",
+	},
+}]
+
+var mapLayout = [{
+	title: "Cholera Pump and Death Locations",
+	mapbox: {
+		style: "light",
+		bearing: 0,
+		pitch: 0,
+		zoom: 0,
+		center: {
+			lat: 51.512500,
+			lon:-0.136415
+		},
+	}
+}]
+
+Plotly.setPlotConfig({
+	mapboxAccessToken: 'pk.eyJ1IjoiZXRwaW5hcmQiLCJhIjoiY2luMHIzdHE0MGFxNXVubTRxczZ2YmUxaCJ9.hwWZful0U2CQxit4ItNsiQ'
+})
+
+Plotly.plot(mapLondon, mapData, mapLayout)
 
 
 var data2 = [{
