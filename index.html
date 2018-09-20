@@ -430,43 +430,7 @@ for (var i = 0; i <naplesData.length; i++) {
     censusFemale.push(censusData[i].female)
 }
 
-Plotly.d3.tsv('choleraDeathLocations.tsv', function(err,rows){
-	Plotly.d3.tsv('choleraPumpLocations.tsv', function(err2,rows2) {
-		function unpack(rows, key) {
-			return rows.map(function(row) { return row[key]; });
-		}
 
-	
-
-var mapData = [{
-	type: "scattermapbox",
-	lat: choleraLat,
-	lon: choleraLon,
-	marker: {
-		size: 20,
-		color: "red",
-	},
-}]
-
-var mapLayout = [{
-	title: "Cholera Pump and Death Locations",
-	mapbox: {
-		style: "light",
-		bearing: 0,
-		pitch: 0,
-		zoom: 0,
-		center: {
-			lat: 51.512500,
-			lon:-0.136415
-		},
-	}
-}]
-
-Plotly.setPlotConfig({
-	mapboxAccessToken: 'pk.eyJ1IjoiZXRwaW5hcmQiLCJhIjoiY2luMHIzdHE0MGFxNXVubTRxczZ2YmUxaCJ9.hwWZful0U2CQxit4ItNsiQ'
-})
-
-Plotly.plot(mapLondon, mapData, mapLayout)
 
 
 var data2 = [{
@@ -625,6 +589,7 @@ for (var i = 1; i < censusFemale.length; i++) {
 		};
 
 
+
 		naplesBarData = [trace5, trace6];
 		censusBarData= [trace7, trace8];
 
@@ -714,6 +679,79 @@ for (var i = 1; i < censusFemale.length; i++) {
   			height: 700,
   			width: 700
 		};
+
+		Plotly.d3.tsv("https://raw.githubusercontent.com/VialliOu/Cholera/master/Cholera%20Death%20Locations.tsv", function(err, rows){
+			Plotly.d3.tsv("https://raw.githubusercontent.com/VialliOu/Cholera/master/Cholera%20Pump%20Locations.tsv", function(err2, rows2){
+				function unpack(rows, key) {
+		        return rows.map(function(row) { return row[key]; });
+		    }
+		    var deaths = unpack(rows, "Deaths"),
+		        deathsLatitude = unpack(rows, "Latitude"),
+		        deathsLongitude = unpack(rows, "Longitude"),
+		        deathCount = [],
+		        hoverText = [],
+						pumpLatitude = unpack(rows2, "Latitude"),
+						pumpLongitude = unpack(rows2, "Longitude");
+		    for ( var i = 0 ; i < deaths.length; i++) {
+		        var currentDeath = deaths[i] * 4; //Multiply to account for size of marker
+		        var currentText = "Deaths: " + deaths[i];
+		        deathCount.push(currentDeath);
+		        hoverText.push(currentText);
+		    }
+		    var data = [{
+		        type: "scattermapbox",
+		        lat: deathsLatitude,
+		        lon: deathsLongitude,
+		        hoverinfo: "text",
+		        text: hoverText,
+		        marker: {
+		            size: deathCount,
+								color: "red",
+		        },
+		    },
+				{
+						type: "scattermapbox",
+						lat: pumpLatitude,
+						lon: pumpLongitude,
+						hoverinfo: "text",
+						text: "Pump",
+						marker: {
+								size: 15,
+								color: "blue",
+						},
+				}];
+				//var data = [deathsData, pumpData];
+		    var layout = {
+		        title: "Cholera Pump and Death Locations",
+						showlegend: false,
+						font: {
+							family: "Helvetica",
+							color: "#000000",
+							size: 13
+						},
+						hoverlabel:{
+							font:{
+								family: "Helvetica",
+								size: 15
+							}
+						},
+						mapbox: {
+								style: "dark",
+						    bearing:0,
+								pitch:0,
+						    zoom:16,
+						    center: {
+						      lat:51.512500,
+						      lon:-0.136415
+						    },
+						},
+		    };
+				Plotly.setPlotConfig({
+				  mapboxAccessToken: 'pk.eyJ1IjoiZXRwaW5hcmQiLCJhIjoiY2luMHIzdHE0MGFxNXVubTRxczZ2YmUxaCJ9.hwWZful0U2CQxit4ItNsiQ'
+				})
+		    Plotly.newPlot(mapLondon, data, layout, {displayModeBar: false});
+			});
+		});
 
         var myChart1=Plotly.plot( plot1Div, data1, layout );
         var myTable1=Plotly.plot( table1Div, data, tablelayout);
