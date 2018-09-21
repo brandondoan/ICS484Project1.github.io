@@ -9,55 +9,79 @@
 <body>
        <header>
             <button class="button button1"style="float: right" type="button" onclick="alert('Visualization by: Brandon Doan\nData created & compiled by: Robin Wilson\nLibraries used: Plot.ly ')">About this visualization</button> 
-           <h2><center><font face="Arial" size="20" color="black">Cholera Deaths in London 1854 </font></center></h2>
+           <h2><center><font face="Arial" size="20" color="black">Cholera and UK Census Statistics, 1854</font></center></h2>
            
         </header>
-    <div id="thevizcolumn" style="width:100%; height:1080px; float: left; background-color:rgb(255, 255, 255);">
-      <div style="width:100%; height:1080px; float: left; margin: auto;">
-      <div id="table1" style="width:100%;height:1080px;" ></div>
+	<div id="thevizcolumn" style="width:100%; height:1000px; background-color:rgb(255, 255, 255);">
+		<h2 align="center" style="margin-top:50px;">London Cholera Outbreak of 1854</h2>
+      <div style="width:50%; height:800px; float: left; margin: auto;">
+      <div id="table1" style="width:100%;height:650px;" ></div>
 	  </div>
+	  <div style="width:50%; height:650px; float: right; margin-top:110px;">
+        <div id="plot1" style="width:100%;height:650px; margin: auto;" ></div>
+	</div>
+	<div style="width:650px; height:300px; float: left; margin-top: 30px; margin-left: 50px;">
+	<hr>
+		<p>Statistics shown are for the Broad Street cholera outbreak, that occured in London 1854. The outbreak took its course over the span of mid-August until late September, and eventually led to the deaths of 616 people.</p>
+	<hr>
+	</div>
+
 	</div>
 	
-    
-    <div style="width:100%; height:960px; float: left;">
-        <div id="plot1" style="width:100%;height:900px; margin: auto;" ></div>
+	<div id="thevizcolumn" style="width:100%; height:750px; background-color:rgb(255, 255, 255);">
+	<div style="width:80%; height:px;  margin-left: 150px;">
+		<div id="mapLondon"></div>
+
 	</div>
-	
-	<div style="width:100%; height:400px; float: left; margin: auto;">
-		<div id="naplesTable" style="width:100%;height:400px;" ></div>
+
+	<div style="width:700px; height:250px; float: left; margin-top: 0px; margin-left: 460px;">
+	<hr>
+	<p align="center">John Snow, a physician at the time, used a dot map similar to the one shown above. With it, he was able to pinpoint the source of the outbreak.</p>
+<hr></div>
 	</div>
 
 
-	<div style="width:100%; height:900px; float: left; margin: auto;">
-		<div id="naplesBar" style="width:100%;height:900px;" ></div>
+	<div id="thevizcolumn" style="width:100%; height:950px; float: left; ">
+		<hr>
+		<h2 align="center" style="margin-top:50px;">Cholera statistics for Naples during the same time period</h2>
+	<div style="width:50%; height:800px; float: left; margin-top: 110px;">
+		<div id="naplesTable" style="width:50%;height:700px;" ></div>
 	</div>
+	<div style="width:50%; height:800px; float: left; margin: auto;">
+		<div id="naplesBar" style="width:100%;height:700px;" ></div>
+	</div>
+</div>
 
-	<div style="width:100%; height:400px; float: left; margin: auto;">
-		<div id="censusTable" style="width:100%;height:400px;" ></div>
-	</div>
-	
-	<div style="width:100%; height:900px; float: left; margin: auto;">
-		<div id="censusBar" style="width:100%;height:900px;" ></div>
-	</div>
 
-	<div style="width:100%; height:800px; float: left; margin: auto;">
+<div id="thevizcolumn" style="width:100%; height:875px; float: left; ">
+	<hr>
+	<h2 align="center" style="margin-top:50px;">UK Census Data from 1854 </h2>
+<div style="width:50%; height:800px; float: left; margin-top: 110px;">
+	<div id="censusTable" style="width:50%;height:700px;" ></div>
+</div>
+<div style="width:50%; height:800px; float: left; margin: auto;">
+	<div id="censusBar" style="width:100%;height:700px;" ></div>
+</div>
+</div>
+
+
+
+<div id="thevizcolumn" style="width:100%; height:800px; float: left; ">
+	<div style="width:50%; height:800px; float: left; margin: auto;">
 		<div id="censusAgeMalePie" style="width:100%;height:800px;" ></div>
 	</div>
 
-	<div style="width:100%; height:800px; float: left; margin: auto;">
+	<div style="width:50%; height:800px; float: left; margin:auto;">
 		<div id="censusAgeFemalePie" style="width:100%;height:800px;" ></div>
 	</div>
 	
-	<div style="width:100%; height:800px; float: left; margin: auto;">
-		<div id="totalPopPie" style="width:100%;height:800px;" ></div>
-	</div>
+</div>
 
-	<div style="width:100%; height:px; float: left; margin: auto;">
-		<div id="mapLondon"></div>
-	</div>
-
-	<div style="width:100%; height:200px; float: left; margin: auto;">
-	</div>
+<div id="thevizcolumn" style="width:100%; height:750px; background-color:rgb(255, 255, 255);">
+<div style="width:30%; height:800px; float: left; margin-left: 400px;">
+	<div id="totalPopPie" style="width:100%;height:800px;" ></div>
+</div>
+</div>
 
     <script>
 
@@ -392,17 +416,18 @@ var values = [
 
 var data = [{
   type: 'table',
+  columnwidth: [60, 20],
   header: {
     values: [["DATE"], ["Attacks that Day"],
-				 ["Total Attacks to Date"], ["Deaths that Day"], ["Total Deaths to Date"]],
-    align: ["left", "center"],
+				 ["Attacks to Date"], ["Deaths that Day"], ["Deaths to Date"]],
+    align: ["center"],
     line: {width: 1, color: '#506784'},
     fill: {color: '#119DFF'},
-    font: {family: "Arial", size: 12, color: "white"}
+    font: {family: "Arial", size: 13, color: "white"}
   },
   cells: {
     values: values,
-    align: ["left", "center"],
+    align: ["center", "right"],
     line: {color: "#506784", width: 1},
 	 fill: {color: ['#25FEFD', 'white']},
     font: {family: "Arial", size: 11, color: ["#506784"]}
@@ -438,14 +463,14 @@ var data2 = [{
   header: {
     values: [["Age"], ["Male"],
 				 ["Female"]],
-    align: ["left", "center"],
+    align: ["center"],
     line: {width: 1, color: '#506784'},
     fill: {color: '#119DFF'},
-    font: {family: "Arial", size: 12, color: "white"}
+    font: {family: "Arial", size: 13, color: "white"}
   },
   cells: {
     values: naplesValues,
-    align: ["left", "center"],
+    align: ["left", "right"],
     line: {color: "#506784", width: 1},
 	 fill: {color: ['#25FEFD', 'white']},
     font: {family: "Arial", size: 11, color: ["#506784"]}
@@ -457,14 +482,14 @@ var data3 = [{
   header: {
     values: [["Age"], ["Male"],
 				 ["Female"]],
-    align: ["left", "center"],
+    align: ["center"],
     line: {width: 1, color: '#506784'},
     fill: {color: '#119DFF'},
-    font: {family: "Arial", size: 12, color: "white"}
+    font: {family: "Arial", size: 13, color: "white"}
   },
   cells: {
     values: censusValues,
-    align: ["left", "center"],
+    align: ["left", "right"],
     line: {color: "#506784", width: 1},
 	 fill: {color: ['#25FEFD', 'white']},
     font: {family: "Arial", size: 11, color: ["#506784"]}
@@ -623,6 +648,8 @@ for (var i = 1; i < censusFemale.length; i++) {
 
        var layout = {
            title: "Attacks and deaths over the course of the London Cholera Outbreak of 1854 ",
+		   height: 650,
+		   width: 830,
            yaxis: {rangemode: 'tozero',
            title: '# of people',
            showline: true,
@@ -635,53 +662,65 @@ for (var i = 1; i < censusFemale.length; i++) {
        };
 
        var tablelayout = {
-           title: "Table for the amount of cholera attacks and deaths by date. (includes cumulative values up to the specified date)",
+           title: "Amount of cholera attacks and deaths by date.",
+		   height: 1000,
+		   width: 800,
            yaxis: {rangemode: 'tozero',
           showline: true,
           zeroline: true}
        }
 
 	    var naplesTableLayout = {
-           title: "Naples fatality numbers for cholera in the same time period, grouped by men and women in different age groups",
+           title: "Cholera fatalties in Naples, 1854",
+		   height: 700,
+		   width: 700,
            yaxis: {rangemode: 'tozero',
           showline: true,
           zeroline: true}
        }
 
 		var censusTableLayout = {
-           title: "Population census for Naples in 1854, grouped by men and women in different age groups",
-           yaxis: {rangemode: 'tozero',
+           title: "Population grouped by men and women in different age groups",
+           height: 700,
+		   width: 700,
+		   yaxis: {rangemode: 'tozero',
           showline: true,
           zeroline: true}
        }
 
 	   	var naplesBarLayout ={
-			   title: "Comparison of gender fatality rates for cholera in Naples, split by age group.",
+			title: "Comparison of gender fatality rates for cholera in Naples, split by age group.",
+			xaxis: {title: 'Age (years)'},
+  			yaxis: {title: 'Fatalities'},
+			height: 700,
+		   	width: 700,
 			barmode: 'group'
 		}
 
 	   	var censusBarLayout ={
-			   title: "Comparison of gender population in Naples, split by age group.",
+			title: "Comparison of gender population in UK split by age group.",
+			xaxis: {title: 'Age (years)'},
+			yaxis: {title: 'Population (per millions)'},
 			barmode: 'group'
 		}		
 		var censusAgeMaleLayout = {
-			title: "Pie chart of the male distrubtion by age group in Naples, 1854",
+			title: "Pie chart of the male distrubtion by age group in UK, 1854",
   			height: 700,
 			width: 700
 		};
 		var censusAgeFemaleLayout = {
-			title: "Pie chart of the female distrubtion by age group in Naples, 1854",
+			title: "Pie chart of the female distrubtion by age group in UK, 1854",
   			height: 700,
 			width: 700
 		};
 		var totalPopLayout = {
 			title: "Total populations compared by gender",
-  			height: 700,
-  			width: 700
+  			height: 800,
+  			width: 800
 		};
 
-		Plotly.d3.tsv("https://raw.githubusercontent.com/VialliOu/Cholera/master/Cholera%20Death%20Locations.tsv", function(err, rows){
-			Plotly.d3.tsv("https://raw.githubusercontent.com/VialliOu/Cholera/master/Cholera%20Pump%20Locations.tsv", function(err2, rows2){
+		Plotly.d3.tsv("https://raw.githubusercontent.com/brandondoan/ICS484Project1.github.io/master/choleraDeathLocations.tsv", function(err, rows){
+			Plotly.d3.tsv("https://raw.githubusercontent.com/brandondoan/ICS484Project1.github.io/master/choleraPumpLocations.tsv", function(err2, rows2){
 				function unpack(rows, key) {
 		        return rows.map(function(row) { return row[key]; });
 		    }

@@ -8,11 +8,12 @@ body {
 
 /* Style the header */
 header {
-    background-color: #666;
+    background-color: rgb(120,120,126);
     padding: 30px;
     text-align: center;
     font-size: 35px;
     color: white;
+    margin-bottom: 0px;
 }
 
 #mapLondon { height: 800px; width: 100%}
